@@ -18,5 +18,10 @@ a {
 }
 
 body {
-  background-color: #88effd;
+  background-color: gray;
+  background-image: url(https://user-images.githubusercontent.com/124536589/263869038-2c635df0-2691-41bc-ba5a-7366377004a1.png);
+  background-size: 55%; 
+  background-repeat: no-repeat; 
+  background-position: center center; 
+  image-rendering: smooth;
 }
