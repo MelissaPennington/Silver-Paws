@@ -1,0 +1,12 @@
+{
+    "firebaseKey" : "",
+    "name" : "Harry",
+    "type" : "dog",
+    "breed" : "Schnauzer",
+    "age" : "4",
+    "image": "https://www.vidavetcare.com/wp-content/uploads/sites/234/2022/04/miniature-schnauzer-dog-breed-infp.jpeg",
+    "action" : "Walk 2 hours a day",
+    "medication_id" : "", 
+    "user_id" : "",
+    "uid": ""
+}
