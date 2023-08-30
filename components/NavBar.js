@@ -22,10 +22,7 @@ export default function NavBar() {
               <Nav.Link>Pets</Nav.Link>
             </Link>
             <Link passHref href="/pet/new">
-              <Nav.Link>New Pet</Nav.Link>
-            </Link>
-            <Link passHref href="/medications">
-              <Nav.Link>Medications</Nav.Link>
+              <Nav.Link>Add Pet</Nav.Link>
             </Link>
             <Link passHref href="/medication/new">
               <Nav.Link>Add Medication</Nav.Link>

@@ -14,6 +14,8 @@ const initialState = {
   instructions: '',
 };
 
+const medicationTypes = ['Amicillian', 'Apoquel', 'Bravecto', 'Carprofen', 'CBD Treats', 'Fenbendazole', 'Front Line', 'Gabeptin', 'Heartgard', 'Meloxicam', 'Metronidazole', 'Nexgard', 'Penylpropanolamine', 'Prednisone', 'Simperica Trio', 'Trazadone'];
+
 function MedicationForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
   const router = useRouter();
@@ -50,36 +52,35 @@ function MedicationForm({ obj }) {
     <Form onSubmit={handleSubmit}>
       <h2 className="text-white mt-5">{obj.firebaseKey ? 'Update' : 'Create'} Medication</h2>
 
-      <FloatingLabel controlId="floatingInput1" label="Name" className="mb-3">
-        <Form.Control type="text" placeholder="Name" name="name" value={formInput.name} onChange={handleChange} required />
+      <FloatingLabel controlId="floatingInput1" label="Medication Name" className="mb-3">
+        <select
+          id="medication-name"
+          name="name"
+          value={formInput.name}
+          onChange={handleChange}
+          required
+        >
+          <option value="" disabled>Select Medication Name</option>
+          {medicationTypes.map((type, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <option key={index} value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
       </FloatingLabel>
 
-      <FloatingLabel controlId="floatingInput2" label="Last Name" className="mb-3">
-        <Form.Control type="text" placeholder="Type" name="Type" value={formInput.type} onChange={handleChange} required />
+      <FloatingLabel controlId="floatingInput2" label="Type" className="mb-3">
+        <Form.Control type="text" placeholder="Type" name="type" value={formInput.type} onChange={handleChange} required />
       </FloatingLabel>
 
-      <FloatingLabel controlId="floatingInput3" label="Quanity" className="mb-3">
-        <Form.Control type="text" placeholder="Quanity" name="image" value={formInput.quanity} onChange={handleChange} required />
+      <FloatingLabel controlId="floatingInput3" label="Quantity" className="mb-3">
+        <Form.Control type="text" placeholder="Quantity" name="quantity" value={formInput.quantity} onChange={handleChange} required />
       </FloatingLabel>
 
       <FloatingLabel controlId="floatingInput4" label="Instructions" className="mb-3">
         <Form.Control type="text" placeholder="Instructions" name="instructions" value={formInput.instructions} onChange={handleChange} required />
       </FloatingLabel>
-
-      <Form.Check
-        className="text-white mb-3"
-        type="switch"
-        id="favorite"
-        name="favorite"
-        label="Favorite?"
-        checked={formInput.favorite}
-        onChange={(e) => {
-          setFormInput((prevState) => ({
-            ...prevState,
-            favorite: e.target.checked,
-          }));
-        }}
-      />
 
       {/* SUBMIT BUTTON  */}
       <Button type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Medication</Button>
@@ -91,7 +92,7 @@ MedicationForm.propTypes = {
   obj: PropTypes.shape({
     name: PropTypes.string,
     type: PropTypes.string,
-    quanity: PropTypes.string,
+    quantity: PropTypes.string,
     instructions: PropTypes.string,
     firebaseKey: PropTypes.string,
   }),
