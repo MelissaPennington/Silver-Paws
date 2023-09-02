@@ -20,8 +20,16 @@ a {
 body {
   background-color: gray;
   background-image: url(https://user-images.githubusercontent.com/124536589/263869038-2c635df0-2691-41bc-ba5a-7366377004a1.png);
-  background-size: 55%; 
+  background-size: 75%; 
   background-repeat: no-repeat; 
   background-position: center center; 
   image-rendering: smooth;
+  color: purple;
+  width: 100vw;
+  height: 100vh;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: x-large;
+  font-weight: bold;
 }
+
+

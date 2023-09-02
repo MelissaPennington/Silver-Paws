@@ -12,19 +12,26 @@ const initialState = {
   name: '',
   image: '',
   age: '',
-  breed: false,
-  actions: '',
+  breed: '',
+  action: '',
   medications: '',
 };
 
 function PetForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
-  const [setMedications] = useState([]);
+  const [medications, setMedications] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
 
   useEffect(() => {
     getMedicationbyPet(user.uid).then(setMedications);
+
+    if (obj.firebaseKey) setFormInput(obj);
+  }, [obj, user]);
+  useEffect(() => {
+    getMedicationbyPet(user.uid).then((medicationData) => {
+      setMedications(medicationData); // Update medications state with fetched data
+    });
 
     if (obj.firebaseKey) setFormInput(obj);
   }, [obj, user]);
@@ -69,7 +76,7 @@ function PetForm({ obj }) {
       </FloatingLabel>
 
       {/* IMAGE INPUT  */}
-      <FloatingLabel controlId="floatingInput2" label="Pet's Image" className="mb-3">
+      <FloatingLabel controlId="floatingInput2" label="Pet's Image" className="mb-4">
         <Form.Control
           type="url"
           placeholder="Enter an image url"
@@ -81,7 +88,7 @@ function PetForm({ obj }) {
       </FloatingLabel>
 
       {/* PRICE INPUT  */}
-      <FloatingLabel controlId="floatingInput3" label="Pet's Age" className="mb-3">
+      <FloatingLabel controlId="floatingInput3" label="Pet's Age" className="mb-5">
         <Form.Control
           type="text"
           placeholder="Enter age"
@@ -91,32 +98,42 @@ function PetForm({ obj }) {
           required
         />
       </FloatingLabel>
+      {/* ACTION INPUT  */}
+      <FloatingLabel controlId="floatingInput1" label="Action" className="mb-6">
+        <Form.Control
+          type="text"
+          placeholder="Action"
+          name="action"
+          value={formInput.name}
+          onChange={handleChange}
+          required
+        />
+      </FloatingLabel>
+
+      <Form.Select
+        aria-label="Medication"
+        name="medication_id"
+        onChange={handleChange}
+        className="mb-3"
+      >
+        <option value="">Select a Medication</option>
+        {
+    medications.map((medication) => (
+      <option
+        key={medication.firebaseKey}
+        value={medication.firebaseKey}
+      >
+        {medication.name}
+      </option>
+    ))
+  }
+      </Form.Select>
 
       {/* AUTHOR SELECT  */}
-      {/* <FloatingLabel controlId="floatingSelect" label="Medication">
-        <Form.Select
-          aria-label="Medication"
-          name="medication_id"
-          onChange={handleChange}
-          className="mb-3"
-        >
-          <option value="">Select any Medications</option>
-          {
-            // eslint-disable-next-line no-shadow
-            medication.map((medication) => (
-              <option
-                key={medication.firebaseKey}
-                value={medication.firebaseKey}
-              >
-                {medication.name}
-              </option>
-            ))
-          }
-        </Form.Select>
-      </FloatingLabel> */}
+      <FloatingLabel controlId="floatingSelect" label="Medication" />
 
       {/* DESCRIPTION TEXTAREA  */}
-      <FloatingLabel controlId="floatingTextarea" label="Actions" className="mb-3">
+      <FloatingLabel controlId="floatingTextarea" label="Actions" className="mb-7">
         <Form.Control
           as="textarea"
           placeholder="Actions"
@@ -139,7 +156,7 @@ function PetForm({ obj }) {
         onChange={(e) => {
           setFormInput((prevState) => ({
             ...prevState,
-            sale: e.target.checked,
+            breed: e.target.checked,
           }));
         }}
       />
@@ -152,7 +169,7 @@ function PetForm({ obj }) {
 
 PetForm.propTypes = {
   obj: PropTypes.shape({
-    actions: PropTypes.string,
+    action: PropTypes.string,
     image: PropTypes.string,
     age: PropTypes.string,
     breed: PropTypes.bool,
