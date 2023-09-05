@@ -5,7 +5,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext';
-import { getMedicationbyPet } from '../../api/medicationData';
+// import { getMedicationbyPet } from '../../api/medicationData';
 import { createPet, updatePet } from '../../api/petData';
 
 const initialState = {
@@ -19,19 +19,19 @@ const initialState = {
 
 function PetForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
-  const [medications, setMedications] = useState([]);
+  // const [medications, setMedications] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
 
   useEffect(() => {
-    getMedicationbyPet(user.uid).then(setMedications);
+    // getMedicationbyPet(user.uid).then(setMedications);
 
     if (obj.firebaseKey) setFormInput(obj);
   }, [obj, user]);
   useEffect(() => {
-    getMedicationbyPet(user.uid).then((medicationData) => {
-      setMedications(medicationData); // Update medications state with fetched data
-    });
+    // getMedicationbyPet(user.uid).then((medicationData) => {
+    //   setMedications(medicationData); // Update medications state with fetched data
+    // });
 
     if (obj.firebaseKey) setFormInput(obj);
   }, [obj, user]);
@@ -110,7 +110,7 @@ function PetForm({ obj }) {
         />
       </FloatingLabel>
 
-      <Form.Select
+      {/* <Form.Select
         aria-label="Medication"
         name="medication_id"
         onChange={handleChange}
@@ -126,8 +126,8 @@ function PetForm({ obj }) {
         {medication.name}
       </option>
     ))
-  }
-      </Form.Select>
+  } */}
+      {/* </Form.Select> */}
 
       {/* AUTHOR SELECT  */}
       <FloatingLabel controlId="floatingSelect" label="Medication" />

@@ -4,16 +4,16 @@ import { getSinglePet } from '../../../api/petData';
 import PetForm from '../../../components/Form/petForm';
 
 export default function EditPet() {
-  const [editItem, setEditItem] = useState([]); // Initialize as an empty array
+  const [editPet, setEditPet] = useState([]); // Initialize as an empty array
   const router = useRouter();
   // TODO: grab the firebasekey
   const { firebaseKey } = router.query;
 
   // TODO: make a call to the API to get the book data
   useEffect(() => {
-    getSinglePet(firebaseKey).then(setEditItem);
+    getSinglePet(firebaseKey).then(setEditPet);
   }, [firebaseKey]);
 
   // TODO: pass object to form
-  return <PetForm obj={editItem} />;
+  return (<PetForm obj={editPet} />);
 }
