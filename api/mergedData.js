@@ -1,33 +1,32 @@
-// import { getUserPets, getSingleUser } from './userData';
-// import { getSinglePet, deleteSinglePet } from './petData';
-// // import { getSingleMedication, deleteSingleMedication } from './medicationData';
+import { getSinglePet, deleteSinglePet } from './petData';
+import { deleteSingleMedication, getMedicationbyPet, getSingleMedication } from './medicationData';
 
-// const viewUserDetails = (userFirebaseKey) => new Promise((resolve, reject) => {
-//   getSingleUser(userFirebaseKey)
-//     .then((userObject) => {
-//       getSingleUser(userobject.pet_id)
-//         .then((userObject) => {
-//           resolve({ userObject, ...petObject });
-//         });
-//     }).catch((error) => reject(error));
-// });
+const viewPetDetails = (petFirebaseKey) => new Promise((resolve, reject) => {
+  getSinglePet(petFirebaseKey)
+    .then((petObject) => {
+      getSingleMedication(petObject.medication_id)
+        .then((medicationObject) => {
+          resolve({ medicationObject, ...petObject });
+        });
+    }).catch((error) => reject(error));
+});
 
-// const viewPetDetails = (petFirebaseKey) => new Promise((resolve, reject) => {
-//   Promise.all([getSinglePet(petFirebaseKey), getUserPets(petFirebaseKey)])
-//     .then(([petObject, userPetsArray]) => {
-//       resolve({ ...petObject, user: userPetsArray });
-//     }).catch((error) => reject(error));
-// });
+const viewMedicationDetails = (medicationFirebaseKey) => new Promise((resolve, reject) => {
+  Promise.all([getSingleMedication(medicationFirebaseKey), getMedicationbyPet(medicationFirebaseKey)])
+    .then(([medicationObject, petMedicationArray]) => {
+      resolve({ ...medicationObject, pets: petMedicationArray });
+    }).catch((error) => reject(error));
+});
 
-// const deleteUserPet = (userId) => new Promise((resolve, reject) => {
-//   getUserPets(userId).then((petArray) => {
-//     console.warn(petArray, 'User Pet');
-//     const deletePetPromises = petArray.map((pet) => deleteSinglePet(pet.firebaseKey));
+const deletePetMedication = (medicationId) => new Promise((resolve, reject) => {
+  getMedicationbyPet(medicationId).then((medicationArray) => {
+    console.warn(medicationArray, 'Pet Medication');
+    const deleteMedicationPromises = medicationArray.map((medication) => deleteSingleMedication(medication.firebaseKey));
 
-//     Promise.all(deletePetPromises).then(() => {
-//       deleteSinglePet(userId).then(resolve);
-//     });
-//   }).catch((error) => reject(error));
-// });
+    Promise.all(deleteMedicationPromises).then(() => {
+      deleteSinglePet(medicationId).then(resolve);
+    });
+  }).catch((error) => reject(error));
+});
 
-// export { viewUserDetails, viewPetDetails, deleteUserPet };
+export { viewPetDetails, viewMedicationDetails, deletePetMedication };

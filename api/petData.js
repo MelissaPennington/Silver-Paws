@@ -1,10 +1,10 @@
 import { clientCredentials } from '../utils/client';
-import { getUser } from './userData';
+// import { getUser } from './userData';
 
 const endpoint = clientCredentials.databaseURL;
 
 const getPets = (uid) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/member.json?orderBy="uid"&equalTo="${uid}"`, {
+  fetch(`${endpoint}/pet.json?orderBy="uid"&equalTo="${uid}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -65,20 +65,20 @@ const updatePet = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const getPetbyUser = async (userFirebaseKey) => new Promise((resolve, reject) => {
-  let petUser = ''; getUser()
-    .then((users) => {
-      users.forEach((user) => {
-        if ([user.pets].includes(userFirebaseKey)) {
-          petUser = user.firebaseKey;
-        }
-      });
-      resolve(petUser);
-    })
-    .catch((error) => {
-      reject(error);
-    });
-});
+// const getPetbyUser = async (userFirebaseKey) => new Promise((resolve, reject) => {
+//   let petUser = ''; getUser()
+//     .then((users) => {
+//       users.forEach((user) => {
+//         if ([user.pets].includes(userFirebaseKey)) {
+//           petUser = user.firebaseKey;
+//         }
+//       });
+//       resolve(petUser);
+//     })
+//     .catch((error) => {
+//       reject(error);
+//     });
+// });
 
 // const getMemberByTeam = async (playerFirebaseKey) => {
 //   let memberTeam = '';
@@ -99,5 +99,5 @@ export {
   deleteSinglePet,
   getSinglePet,
   updatePet,
-  getPetbyUser,
+  // getPetbyUser,
 };
