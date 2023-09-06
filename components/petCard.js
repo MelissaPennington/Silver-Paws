@@ -9,7 +9,7 @@ export default function PetCard({ petObj, onUpdate }) {
   // FOR DELETE, WE NEED TO REMOVE THE BOOK AND HAVE THE VIEW RERENDER,
   // SO WE PASS THE FUNCTION FROM THE PARENT THAT GETS THE BOOKS
   const deleteThisPet = () => {
-    if (window.confirm(`Delete ${petObj.name}?`)) {
+    if (window.confirm(`🪦 R.I.P. ${petObj.name}?`)) {
       deleteSinglePet(petObj.firebaseKey).then(() => onUpdate());
     }
   };
