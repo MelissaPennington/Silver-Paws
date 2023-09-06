@@ -5,12 +5,13 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext';
+import { getPets } from '../../api/petData';
 import { createMedication, updateMedication } from '../../api/medicationData';
 
 const initialState = {
   name: '',
   type: '',
-  quanity: '',
+  quantity: '',
   instructions: '',
 };
 
@@ -20,29 +21,39 @@ function MedicationForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
   const router = useRouter();
   const { user } = useAuth();
+  const [pets, setPets] = useState([]);
+  const [isOtherSelected, setIsOtherSelected] = useState(false);
+
+  useEffect(() => {
+    getPets(user.uid).then((petsData) => setPets(petsData));
+    if (obj.firebaseKey) setFormInput(obj);
+  }, [obj, user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === 'name') {
+      if (value === 'Other') {
+        setIsOtherSelected(true);
+      } else {
+        setIsOtherSelected(false); // Add this line to hide the "Other Medication" input field
+      }
+    }
     setFormInput((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
 
-  useEffect(() => {
-    if (obj.firebaseKey) setFormInput(obj);
-  }, [obj]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (obj.firebaseKey) {
-      updateMedication(formInput).then(() => router.push(`/medication/${obj.firebaseKey}`));
+      updateMedication(formInput).then(() => router.push(`/pet/${obj.firebaseKey}`));
     } else {
       const payload = { ...formInput, uid: user.uid };
       createMedication(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
         updateMedication(patchPayload).then(() => {
-          router.push('/medication');
+          router.push('/pet');
         });
       });
     }
@@ -67,7 +78,43 @@ function MedicationForm({ obj }) {
               {type}
             </option>
           ))}
+          <option value="Other">Other</option>
         </select>
+      </FloatingLabel>
+
+      {isOtherSelected && (
+      <FloatingLabel controlId="floatingInput5" label="Other Medication" className="mb-3">
+        <Form.Control
+          type="text"
+          placeholder="Other Medication"
+          name="otherMedication"
+          value={formInput.otherMedication}
+          onChange={handleChange}
+          required
+        />
+      </FloatingLabel>
+      )}
+
+      {/* AUTHOR SELECT  */}
+      <FloatingLabel controlId="floatingSelect" label="Pet">
+        <Form.Select
+          aria-label="Pet"
+          name="pet_id"
+          onChange={handleChange}
+          className="mb-3"
+        >
+          <option value="">Select a Pet</option>
+          {
+            pets.map((pet) => (
+              <option
+                key={pet.firebaseKey}
+                value={pet.firebaseKey}
+              >
+                {pet.name}
+              </option>
+            ))
+          }
+        </Form.Select>
       </FloatingLabel>
 
       <FloatingLabel controlId="floatingInput2" label="Type" className="mb-3">
@@ -91,6 +138,7 @@ function MedicationForm({ obj }) {
 MedicationForm.propTypes = {
   obj: PropTypes.shape({
     name: PropTypes.string,
+    pet_id: PropTypes.string,
     type: PropTypes.string,
     quantity: PropTypes.string,
     instructions: PropTypes.string,

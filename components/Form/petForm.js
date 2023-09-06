@@ -5,7 +5,6 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext';
-// import { getMedicationbyPet } from '../../api/medicationData';
 import { createPet, updatePet } from '../../api/petData';
 
 const initialState = {
@@ -19,20 +18,10 @@ const initialState = {
 
 function PetForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
-  // const [medications, setMedications] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
 
   useEffect(() => {
-    // getMedicationbyPet(user.uid).then(setMedications);
-
-    if (obj.firebaseKey) setFormInput(obj);
-  }, [obj, user]);
-  useEffect(() => {
-    // getMedicationbyPet(user.uid).then((medicationData) => {
-    //   setMedications(medicationData); // Update medications state with fetched data
-    // });
-
     if (obj.firebaseKey) setFormInput(obj);
   }, [obj, user]);
 
@@ -53,7 +42,7 @@ function PetForm({ obj }) {
       createPet(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
         updatePet(patchPayload).then(() => {
-          router.push('/');
+          router.push('/pets');
         });
       });
     }
@@ -99,54 +88,30 @@ function PetForm({ obj }) {
         />
       </FloatingLabel>
       {/* ACTION INPUT  */}
+      <FloatingLabel controlId="floatingInput1" label="Breed" className="mb-6">
+        <Form.Control
+          type="text"
+          placeholder="Breed"
+          name="breed"
+          value={formInput.breed}
+          onChange={handleChange}
+          required
+        />
+      </FloatingLabel>
+
+      {/* ACTION INPUT  */}
       <FloatingLabel controlId="floatingInput1" label="Action" className="mb-6">
         <Form.Control
           type="text"
           placeholder="Action"
           name="action"
-          value={formInput.name}
+          value={formInput.action}
           onChange={handleChange}
           required
         />
       </FloatingLabel>
 
-      {/* <Form.Select
-        aria-label="Medication"
-        name="medication_id"
-        onChange={handleChange}
-        className="mb-3"
-      >
-        <option value="">Select a Medication</option>
-        {
-    medications.map((medication) => (
-      <option
-        key={medication.firebaseKey}
-        value={medication.firebaseKey}
-      >
-        {medication.name}
-      </option>
-    ))
-  } */}
-      {/* </Form.Select> */}
-
-      {/* AUTHOR SELECT  */}
-      <FloatingLabel controlId="floatingSelect" label="Medication" />
-
-      {/* DESCRIPTION TEXTAREA  */}
-      <FloatingLabel controlId="floatingTextarea" label="Actions" className="mb-7">
-        <Form.Control
-          as="textarea"
-          placeholder="Actions"
-          style={{ height: '100px' }}
-          name="description"
-          value={formInput.description}
-          onChange={handleChange}
-          required
-        />
-      </FloatingLabel>
-
-      {/* A WAY TO HANDLE UPDATES FOR TOGGLES, RADIOS, ETC  */}
-      <Form.Check
+      {/* <Form.Check
         className="text-white mb-3"
         type="switch"
         id="breed"
@@ -159,7 +124,7 @@ function PetForm({ obj }) {
             breed: e.target.checked,
           }));
         }}
-      />
+      /> */}
 
       {/* SUBMIT BUTTON  */}
       <Button type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Pet</Button>
@@ -172,7 +137,7 @@ PetForm.propTypes = {
     action: PropTypes.string,
     image: PropTypes.string,
     age: PropTypes.string,
-    breed: PropTypes.bool,
+    breed: PropTypes.string,
     name: PropTypes.string,
     medication_id: PropTypes.string,
     firebaseKey: PropTypes.string,
