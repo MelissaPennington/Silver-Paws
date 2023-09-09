@@ -27,6 +27,18 @@ const deleteSinglePet = (firebaseKey) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getDeletedPets = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/pet.json?orderBy="uid"&equalTo="${uid}"&deleted=true`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(Object.values(data)))
+    .catch(reject);
+});
+
 const getSinglePet = (firebaseKey) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/pet/${firebaseKey}.json`, {
     method: 'GET',
@@ -97,6 +109,7 @@ export {
   getPets,
   createPet,
   deleteSinglePet,
+  getDeletedPets,
   getSinglePet,
   updatePet,
   // getPetbyUser,

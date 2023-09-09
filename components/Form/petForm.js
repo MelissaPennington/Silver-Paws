@@ -42,7 +42,7 @@ function PetForm({ obj }) {
       createPet(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
         updatePet(patchPayload).then(() => {
-          router.push('/pets');
+          router.push('/pet');
         });
       });
     }

@@ -10,6 +10,7 @@ import { createMedication, updateMedication } from '../../api/medicationData';
 
 const initialState = {
   name: '',
+  pet: '',
   type: '',
   quantity: '',
   instructions: '',
@@ -47,7 +48,7 @@ function MedicationForm({ obj }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (obj.firebaseKey) {
-      updateMedication(formInput).then(() => router.push(`/pet/${obj.firebaseKey}`));
+      updateMedication(formInput).then(() => router.push(`/medication/${obj.firebaseKey}`));
     } else {
       const payload = { ...formInput, uid: user.uid };
       createMedication(payload).then(({ name }) => {
@@ -63,7 +64,7 @@ function MedicationForm({ obj }) {
     <Form onSubmit={handleSubmit}>
       <h2 className="text-white mt-5">{obj.firebaseKey ? 'Update' : 'Create'} Medication</h2>
 
-      <FloatingLabel controlId="floatingInput1" label="Medication Name" className="mb-3">
+      <FloatingLabel controlId="floatingInput1" label="" className="mb-3">
         <select
           id="medication-name"
           name="name"
@@ -95,7 +96,6 @@ function MedicationForm({ obj }) {
       </FloatingLabel>
       )}
 
-      {/* AUTHOR SELECT  */}
       <FloatingLabel controlId="floatingSelect" label="Pet">
         <Form.Select
           aria-label="Pet"
