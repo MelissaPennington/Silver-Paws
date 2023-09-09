@@ -77,34 +77,6 @@ const updatePet = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-// const getPetbyUser = async (userFirebaseKey) => new Promise((resolve, reject) => {
-//   let petUser = ''; getUser()
-//     .then((users) => {
-//       users.forEach((user) => {
-//         if ([user.pets].includes(userFirebaseKey)) {
-//           petUser = user.firebaseKey;
-//         }
-//       });
-//       resolve(petUser);
-//     })
-//     .catch((error) => {
-//       reject(error);
-//     });
-// });
-
-// const getMemberByTeam = async (playerFirebaseKey) => {
-//   let memberTeam = '';
-//   await getTeams()
-//     .then((teams) => {
-//       teams.forEach((team) => {
-//         if ([team.roster].includes(playerFirebaseKey)) {
-//           memberTeam = team.firebaseKey;
-//         }
-//       });
-//     });
-//   return memberTeam;
-// };
-
 export {
   getPets,
   createPet,
@@ -112,5 +84,4 @@ export {
   getDeletedPets,
   getSinglePet,
   updatePet,
-  // getPetbyUser,
 };

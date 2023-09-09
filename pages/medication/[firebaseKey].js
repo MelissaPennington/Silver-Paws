@@ -27,7 +27,7 @@ export default function ViewMedication() {
             <PetCard key={pet.firebaseKey} petObj={pet} />
           ))
         ) : (
-          <p>No pets found for this medication.</p>
+          <p>No pets found with this medication.</p>
         )}
       </div>
     </div>

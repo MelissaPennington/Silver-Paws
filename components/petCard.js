@@ -5,20 +5,36 @@ import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { deleteSinglePet } from '../api/petData';
-import { getMedications } from '../api/medicationData'; // Import the function to fetch medications
+import { getMedicationbyPet } from '../api/medicationData';
+import MedicationCard from './medicationCard';
 
 export default function PetCard({ petObj, onUpdate }) {
   const router = useRouter();
-  const [medications, setMedications] = useState([]); // State to store medications
+  const [medications, setMedications] = useState([]);
 
-  // Fetch medications for the current pet
+  const getMeds = () => {
+    getMedicationbyPet(petObj.firebaseKey)
+      .then((meds) => {
+        console.log('Fetched medications:', meds);
+        setMedications(meds || []);
+      })
+      .catch((error) => {
+        console.error('Error fetching medications:', error);
+        setMedications([]);
+      });
+  };
+
   useEffect(() => {
+    console.warn('Fetching medications for pet with Firebase key:', petObj.firebaseKey);
+
     if (petObj.firebaseKey) {
-      getMedications(petObj.firebaseKey)
-        .then((meds) => setMedications(meds))
-        .catch((error) => console.error('Error fetching medications:', error));
+      getMeds();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [petObj.firebaseKey]);
+
+  console.warn('PetCard props:', petObj);
+  console.warn('Medications:', medications);
 
   const deleteAndNavigateToRemember = () => {
     if (window.confirm(`🪦 R.I.P. ${petObj.name}?`)) {
@@ -42,13 +58,19 @@ export default function PetCard({ petObj, onUpdate }) {
         <Card.Title>{petObj.medication}</Card.Title>
         {/* Render medications */}
         <h5>Medications:</h5>
-        {medications.map((medication) => (
-          <div key={medication.firebaseKey}>
-            <p>{medication.name}</p>
-            <p>Type: {medication.type}</p>
-            <p>Quantity: {medication.quantity}</p>
-          </div>
-        ))}
+        {medications.length > 0 ? (
+          medications.map((medication) => (
+            // <div key={medication.firebaseKey}>
+            //   <p>{medication.name}</p>
+            //   <p>Type: {medication.type}</p>
+            //   <p>Quantity: {medication.quantity}</p>
+            // </div>
+            <MedicationCard medicationObj={medication} onUpdate={getMeds} />
+          ))
+        ) : (
+          <p>No medications found.</p>
+        )}
+
         <Link href={`/pet/${petObj.firebaseKey}`} passHref>
           <Button variant="primary" className="m-2">VIEW</Button>
         </Link>

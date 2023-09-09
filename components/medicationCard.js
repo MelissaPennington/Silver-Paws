@@ -16,7 +16,7 @@ function MedicationCard({ medicationObj, onUpdate }) {
     <Card style={{ width: '18rem', margin: '10px' }}>
       <Card.Body>
         <Card.Title>{medicationObj.name}</Card.Title>
-        <Card.Title>{medicationObj.pet_name}</Card.Title>
+        <Card.Title>{medicationObj.pet_id}</Card.Title>
         <Link href={`/medication/${medicationObj.firebaseKey}`} passHref>
           <Button variant="primary" className="m-2">VIEW</Button>
         </Link>
@@ -34,7 +34,7 @@ function MedicationCard({ medicationObj, onUpdate }) {
 MedicationCard.propTypes = {
   medicationObj: PropTypes.shape({
     name: PropTypes.string,
-    pet_name: PropTypes.arrayOf(PropTypes.string),
+    pet_id: PropTypes.arrayOf(PropTypes.string),
     email: PropTypes.string,
     firebaseKey: PropTypes.string,
     quantity: PropTypes.string,

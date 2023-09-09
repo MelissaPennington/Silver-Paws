@@ -13,7 +13,7 @@ const initialState = {
   age: '',
   breed: '',
   action: '',
-  medications: '',
+  medication_id: '',
 };
 
 function PetForm({ obj }) {
@@ -23,7 +23,7 @@ function PetForm({ obj }) {
 
   useEffect(() => {
     if (obj.firebaseKey) setFormInput(obj);
-  }, [obj, user]);
+  }, [obj]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -111,22 +111,6 @@ function PetForm({ obj }) {
         />
       </FloatingLabel>
 
-      {/* <Form.Check
-        className="text-white mb-3"
-        type="switch"
-        id="breed"
-        name="breed"
-        label="breed type?"
-        checked={formInput.breed}
-        onChange={(e) => {
-          setFormInput((prevState) => ({
-            ...prevState,
-            breed: e.target.checked,
-          }));
-        }}
-      /> */}
-
-      {/* SUBMIT BUTTON  */}
       <Button type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Pet</Button>
     </Form>
   );

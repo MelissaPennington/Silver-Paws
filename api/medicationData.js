@@ -1,5 +1,6 @@
+/* eslint-disable camelcase */
 import { clientCredentials } from '../utils/client';
-import { getPets } from './petData';
+// import { getPets } from './petData';
 
 const endpoint = clientCredentials.databaseURL;
 
@@ -65,33 +66,33 @@ const updateMedication = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const getMedicationbyPet = async (userFirebaseKey) => new Promise((resolve, reject) => {
-  let petMedication = ''; getPets()
-    .then((pets) => {
-      pets.forEach((pet) => {
-        if ([pet.medications].includes(userFirebaseKey)) {
-          petMedication = pet.firebaseKey;
-        }
-      });
-      resolve(petMedication);
-    })
-    .catch((error) => {
-      reject(error);
-    });
-});
-
-// const getMemberByTeam = async (playerFirebaseKey) => {
-//   let memberTeam = '';
-//   await getTeams()
-//     .then((teams) => {
-//       teams.forEach((team) => {
-//         if ([team.roster].includes(playerFirebaseKey)) {
-//           memberTeam = team.firebaseKey;
+// const getMedicationbyPet = async (userFirebaseKey) => new Promise((resolve, reject) => {
+//   let petMedication = '';
+//   getPets()
+//     .then((pets) => {
+//       pets.forEach((pet) => {
+//         if (pet.medications.includes(userFirebaseKey)) {
+//           petMedication = pet.firebaseKey;
 //         }
 //       });
+//       resolve(petMedication);
+//     })
+//     .catch((error) => {
+//       reject(error);
 //     });
-//   return memberTeam;
-// };
+// });
+
+const getMedicationbyPet = (pet_id) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/medication.json?orderBy="pet_id"&equalTo="${pet_id}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(Object.values(data)))
+    .catch(reject);
+});
 
 export {
   getMedications,
