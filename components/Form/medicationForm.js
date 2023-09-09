@@ -10,7 +10,7 @@ import { createMedication, updateMedication } from '../../api/medicationData';
 
 const initialState = {
   name: '',
-  pet: '',
+  pet_id: '',
   type: '',
   quantity: '',
   instructions: '',
@@ -27,8 +27,11 @@ function MedicationForm({ obj }) {
 
   useEffect(() => {
     getPets(user.uid).then((petsData) => setPets(petsData));
+  }, [user]);
+
+  useEffect(() => {
     if (obj.firebaseKey) setFormInput(obj);
-  }, [obj, user]);
+  }, [obj]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

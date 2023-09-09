@@ -1,5 +1,5 @@
 // import { useAuth } from '../utils/context/authContext';
-// import User from '../components/user';
+// import User
 
 // export default function Profile() {
 //   const { user } = useAuth();
