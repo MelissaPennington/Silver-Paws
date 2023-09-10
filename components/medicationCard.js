@@ -16,7 +16,7 @@ function MedicationCard({ medicationObj, onUpdate }) {
     <Card style={{ width: '18rem', margin: '10px' }}>
       <Card.Body>
         <Card.Title>{medicationObj.name}</Card.Title>
-        <Card.Title>{medicationObj.pet_id}</Card.Title>
+        {/* <Card.Title>{medicationObj.pet_name}</Card.Title> */}
         <Link href={`/medication/${medicationObj.firebaseKey}`} passHref>
           <Button variant="primary" className="m-2">VIEW</Button>
         </Link>

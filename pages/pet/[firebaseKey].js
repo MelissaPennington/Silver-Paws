@@ -6,10 +6,7 @@ import { getSinglePet } from '../../api/petData';
 
 export default function ViewPet() {
   const [pet, setPet] = useState({});
-  // const [petDetails, setPetDetails] = useState({});
   const router = useRouter();
-
-  // TODO: grab firebaseKey from url
   const { firebaseKey } = router.query;
 
   // TODO: make call to API layer to get the data
