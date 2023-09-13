@@ -11,6 +11,23 @@ const viewPetDetails = (petFirebaseKey) => new Promise((resolve, reject) => {
     }).catch((error) => reject(error));
 });
 
+const getMedicationByPetId = (petFirebaseKey) => new Promise((resolve, reject) => {
+  getSinglePet(petFirebaseKey)
+    .then((petObject) => {
+      if (!petObject.medication_id) {
+        // Handle the case where the pet has no associated medication
+        resolve({ ...petObject, medicationObject: null });
+      } else {
+        getSingleMedication(petObject.medication_id)
+          .then((medicationObject) => {
+            resolve({ medicationObject, ...petObject });
+          })
+          .catch((error) => reject(error));
+      }
+    })
+    .catch((error) => reject(error));
+});
+
 const viewMedicationDetails = (medicationFirebaseKey) => new Promise((resolve, reject) => {
   Promise.all([getSingleMedication(medicationFirebaseKey), getMedicationbyPet(medicationFirebaseKey)])
     .then(([medicationObject, petMedicationArray]) => {
@@ -29,4 +46,6 @@ const deletePetMedication = (medicationId) => new Promise((resolve, reject) => {
   }).catch((error) => reject(error));
 });
 
-export { viewPetDetails, viewMedicationDetails, deletePetMedication };
+export {
+  viewPetDetails, viewMedicationDetails, getMedicationByPetId, deletePetMedication,
+};

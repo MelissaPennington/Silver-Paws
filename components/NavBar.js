@@ -28,10 +28,10 @@ export default function NavBar() {
             <Link passHref href="/medication/new">
               <Nav.Link>Add Medication</Nav.Link>
             </Link>
-            <Link passHref href="/remember">
+            <Link passHref href="/deceased">
               <Nav.Link>The Rainbow Bridge🌈</Nav.Link>
             </Link>
-            <Button onClick={signOut}>Sign Out</Button>
+            <Button variantonClick={signOut}>Sign Out</Button>
           </Nav>
         </Navbar.Collapse>
       </Container>

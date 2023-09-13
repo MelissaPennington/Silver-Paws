@@ -6,11 +6,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { deleteSinglePet } from '../api/petData';
 import { getMedicationbyPet } from '../api/medicationData';
-import MedicationCard from './medicationCard';
+import MedicationCard from './medicationCard'; // Import the MedicationCard component
 
 export default function PetCard({ petObj, onUpdate }) {
   const router = useRouter();
   const [medications, setMedications] = useState([]);
+  const isDeleted = petObj.deleted || false; // Check if 'deleted' property is true or not
 
   const getMeds = () => {
     getMedicationbyPet(petObj.firebaseKey)
@@ -30,7 +31,7 @@ export default function PetCard({ petObj, onUpdate }) {
     if (petObj.firebaseKey) {
       getMeds();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [petObj.firebaseKey]);
 
   console.warn('PetCard props:', petObj);
@@ -39,49 +40,61 @@ export default function PetCard({ petObj, onUpdate }) {
   const deleteAndNavigateToRemember = () => {
     if (window.confirm(`🪦 R.I.P. ${petObj.name}?`)) {
       deleteSinglePet(petObj.firebaseKey).then(() => {
-        onUpdate();
-        router.push('/remember');
+        onUpdate(petObj.firebaseKey); // Pass the firebaseKey to the parent component for deletion
+        router.push('/deceased');
       });
     }
   };
 
   return (
-    <Card style={{ width: '18rem', margin: '10px' }}>
-      {petObj.image && (
-        <Card.Img variant="top" src={petObj.image} alt={petObj.name} style={{ height: '400px' }} />
+    <>
+      {!isDeleted && ( // Conditionally render if the pet is not deleted
+        <Card style={{ width: '18rem', margin: '10px' }}>
+          {petObj.image && (
+            <>
+              <Card.Img
+                variant="top"
+                src={petObj.image}
+                alt={petObj.name}
+                style={{ height: '400px', objectFit: 'cover' }}
+              />
+              <Card.Body>
+                <Card.Title>Name: {petObj.name}</Card.Title>
+                <Card.Title>Age: {petObj.age}</Card.Title>
+                <Card.Title>Breed: {petObj.breed}</Card.Title>
+                <Card.Title>Actions: {petObj.action}</Card.Title>
+                {/* Display medications as a comma-separated list */}
+                {medications.length > 0 && (
+                  <div>
+                    <h5>Medications:</h5>
+                    <p>{medications.map((medication) => medication.name).join(', ')}</p>
+                  </div>
+                )}
+                <Link href={`/pet/${petObj.firebaseKey}`} passHref>
+                  <Button variant="light" className="m-2">
+                    VIEW
+                  </Button>
+                </Link>
+                <Link href={`/pet/edit/${petObj.firebaseKey}`} passHref>
+                  <Button variant="secondary">EDIT</Button>
+                </Link>
+                <Button variant="dark" onClick={deleteAndNavigateToRemember} className="m-2">
+                  R.I.P.
+                </Button>
+              </Card.Body>
+              {/* Render MedicationCard for each medication */}
+              {medications.map((medication) => (
+                <MedicationCard
+                  key={medication.firebaseKey}
+                  medicationObj={medication}
+                  onUpdate={getMeds}
+                />
+              ))}
+            </>
+          )}
+        </Card>
       )}
-      <Card.Body>
-        <Card.Title>{petObj.name}</Card.Title>
-        <Card.Title>{petObj.age}</Card.Title>
-        <Card.Title>{petObj.breed}</Card.Title>
-        <Card.Title>{petObj.action}</Card.Title>
-        <Card.Title>{petObj.medication}</Card.Title>
-        {/* Render medications */}
-        <h5>Medications:</h5>
-        {medications.length > 0 ? (
-          medications.map((medication) => (
-            // <div key={medication.firebaseKey}>
-            //   <p>{medication.name}</p>
-            //   <p>Type: {medication.type}</p>
-            //   <p>Quantity: {medication.quantity}</p>
-            // </div>
-            <MedicationCard medicationObj={medication} onUpdate={getMeds} />
-          ))
-        ) : (
-          <p>No medications found.</p>
-        )}
-
-        <Link href={`/pet/${petObj.firebaseKey}`} passHref>
-          <Button variant="primary" className="m-2">VIEW</Button>
-        </Link>
-        <Link href={`/pet/edit/${petObj.firebaseKey}`} passHref>
-          <Button variant="info">EDIT</Button>
-        </Link>
-        <Button variant="danger" onClick={deleteAndNavigateToRemember} className="m-2">
-          R.I.P.
-        </Button>
-      </Card.Body>
-    </Card>
+    </>
   );
 }
 
@@ -94,6 +107,7 @@ PetCard.propTypes = {
     action: PropTypes.string,
     medication: PropTypes.string,
     firebaseKey: PropTypes.string,
+    deleted: PropTypes.bool,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };

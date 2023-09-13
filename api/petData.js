@@ -28,7 +28,7 @@ const deleteSinglePet = (firebaseKey) => new Promise((resolve, reject) => {
 });
 
 const getDeletedPets = (uid) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/pet.json?orderBy="uid"&equalTo="${uid}"&deleted=true`, {
+  fetch(`${endpoint}/pet.json?orderBy="uid"&equalTo="${uid}"&orderBy="deleted"&equalTo=true`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
