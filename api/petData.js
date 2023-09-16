@@ -16,14 +16,35 @@ const getPets = (uid) => new Promise((resolve, reject) => {
 });
 
 const deleteSinglePet = (firebaseKey) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/pet/${firebaseKey}.json`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => resolve((data)))
+  fetch(`${endpoint}/pet/${firebaseKey}.json`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Failed to fetch pet data: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then((petData) => {
+      const updatedPetData = { ...petData, isDeleted: true };
+
+      fetch(`${endpoint}/pet/${firebaseKey}.json`, {
+        method: 'PATCH', // Update to 'PATCH' to modify the existing record
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedPetData),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Failed to update pet data: ${response.statusText}`);
+          }
+          return response.json();
+        })
+        .then((updatedData) => {
+          // Now, the isDeleted field should be true in Firebase
+          resolve(updatedData);
+        })
+        .catch(reject);
+    })
     .catch(reject);
 });
 
