@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../utils/context/authContext';
 import RememberPets from '../components/rememberPets';
-import { getDeletedPets } from '../api/petData';
+import { getDeletedPets } from '../api/petData'; // Import the correct function
 
 function Deceased() {
   const [deceaseds, setDeceaseds] = useState([]);
@@ -28,8 +28,8 @@ function Deceased() {
         {deceaseds.map((pet) => (
           <RememberPets
             key={pet.firebaseKey}
-            petObj={pet}
-            onUpdate={getAllTheDeletedPets}
+            pet={pet}
+            // onUpdate={getAllTheDeletedPets}
           />
         ))}
       </div>
