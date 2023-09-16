@@ -48,15 +48,30 @@ const deleteSinglePet = (firebaseKey) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+// const getDeletedPets = (uid) => new Promise((resolve, reject) => {
+//   fetch(`${endpoint}/pet.json?orderBy="uid"&equalTo="${uid}"&orderBy="isDeleted"&equalTo=true`, {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//   })
+//     .then((response) => response.json())
+//     .then((data) => resolve(Object.values(data)))
+//     .catch(reject);
+// });
+
 const getDeletedPets = (uid) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/pet.json?orderBy="uid"&equalTo="${uid}"&orderBy="deleted"&equalTo=true`, {
+  fetch(`${endpoint}/pet.json?orderBy="uid"&equalTo="${uid}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
   })
     .then((response) => response.json())
-    .then((data) => resolve(Object.values(data)))
+    .then((data) => {
+      const isDeleted = Object.values(data).filter((pet) => pet.isDeleted);
+      resolve(isDeleted);
+    })
     .catch(reject);
 });
 
