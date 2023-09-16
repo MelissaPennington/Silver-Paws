@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -8,12 +8,11 @@ import { deleteSingleMedication, getMedicationbyPet } from '../api/medicationDat
 function MedicationCard({ medicationObj, onUpdate }) {
   const [medications, setMedications] = useState([]);
 
-  const getMedicationsForPet = () => {
+  const getMedicationsForPet = useCallback(() => {
     if (Array.isArray(medicationObj.pet_id) && medicationObj.pet_id.length > 0) {
       // Fetch medications for the pet using its pet_id
       getMedicationbyPet(medicationObj.pet_id[0]) // Assuming there's only one pet_id for the medication
         .then((meds) => {
-          console.log('Fetched medications for pet:', meds);
           setMedications(meds || []);
         })
         .catch((error) => {
@@ -21,11 +20,16 @@ function MedicationCard({ medicationObj, onUpdate }) {
           setMedications([]);
         });
     }
-  };
+  });
 
   useEffect(() => {
     getMedicationsForPet();
+    console.warn(medicationObj); // Move the console.log here if you want to log medicationObj after fetching data.
   }, []);
+
+  useEffect(() => {
+    getMedicationsForPet();
+  }, [getMedicationsForPet]);
 
   const deleteThisMedication = () => {
     if (window.confirm(`Delete ${medicationObj.name}?`)) {

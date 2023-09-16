@@ -29,7 +29,7 @@ function Deceased() {
           <RememberPets
             key={pet.firebaseKey}
             petObj={pet}
-            onUpdate={getDeletedPets}
+            onUpdate={getAllTheDeletedPets}
           />
         ))}
       </div>

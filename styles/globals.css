@@ -72,13 +72,12 @@ a:hover {
   text-align: center;
 }
 
-/* Add custom styling to the .remember class */
-.remember {
+.deceased {
   background-image: url('https://user-images.githubusercontent.com/124536589/265879524-c8c78dce-f841-4a55-9c47-7e4d2dc067ef.png');
-  background-size: cover; /* Cover the entire element with the background image */
+  background-size: cover; 
   background-repeat: no-repeat;
   background-position: center center;
-  padding: 50px; /* Add some padding for spacing */
-  color: #fff; /* White text color on the .remember background */
-  text-align: center; /* Center text */
+  padding: 50px;
+  color: #fff; 
+  text-align: center; 
 }

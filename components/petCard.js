@@ -11,7 +11,7 @@ import MedicationCard from './medicationCard'; // Import the MedicationCard comp
 export default function PetCard({ petObj, onUpdate }) {
   const router = useRouter();
   const [medications, setMedications] = useState([]);
-  const isDeleted = petObj.deleted || false; // Check if 'deleted' property is true or not
+  const isDeleted = petObj.isDeleted || false; // Check if 'deleted' property is true or not
 
   const getMeds = () => {
     getMedicationbyPet(petObj.firebaseKey)
@@ -39,10 +39,16 @@ export default function PetCard({ petObj, onUpdate }) {
 
   const deleteAndNavigateToRemember = () => {
     if (window.confirm(`🪦 R.I.P. ${petObj.name}?`)) {
-      deleteSinglePet(petObj.firebaseKey).then(() => {
-        onUpdate(petObj.firebaseKey); // Pass the firebaseKey to the parent component for deletion
-        router.push('/deceased');
-      });
+      const updatedPetObj = { ...petObj, deleted: true };
+
+      deleteSinglePet(petObj.firebaseKey, updatedPetObj)
+        .then(() => {
+          onUpdate(petObj.firebaseKey);
+          router.push('/deceased');
+        })
+        .catch((error) => {
+          console.error('Error deleting pet:', error);
+        });
     }
   };
 
@@ -107,7 +113,7 @@ PetCard.propTypes = {
     action: PropTypes.string,
     medication: PropTypes.string,
     firebaseKey: PropTypes.string,
-    deleted: PropTypes.bool,
+    isDeleted: PropTypes.bool,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };

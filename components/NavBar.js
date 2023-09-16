@@ -31,7 +31,7 @@ export default function NavBar() {
             <Link passHref href="/deceased">
               <Nav.Link>The Rainbow Bridge🌈</Nav.Link>
             </Link>
-            <Button variantonClick={signOut}>Sign Out</Button>
+            <Button onClick={signOut}>Sign Out</Button>
           </Nav>
         </Navbar.Collapse>
       </Container>
