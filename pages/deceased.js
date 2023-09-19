@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useAuth } from '../utils/context/authContext';
 import RememberPets from '../components/rememberPets';
-import { getDeletedPets } from '../api/petData'; // Import the correct function
+import { getDeletedPets } from '../api/petData';
+// import './RememberPets.css';
 
 function Deceased() {
   const [deceaseds, setDeceaseds] = useState([]);

@@ -38,14 +38,28 @@ function MedicationForm({ obj }) {
     if (name === 'name') {
       if (value === 'Other') {
         setIsOtherSelected(true);
+        // Set the value of the name field to "Other" when "Other" is selected
+        setFormInput((prevState) => ({
+          ...prevState,
+          [name]: 'Other',
+        }));
       } else {
-        setIsOtherSelected(false); // Add this line to hide the "Other Medication" input field
+        setIsOtherSelected(false);
+        // Set the value of the name field to the entered value when "Other" is not selected
+        setFormInput((prevState) => ({
+          ...prevState,
+          [name]: value,
+        }));
       }
+      console.log('Name:', name);
+      console.log('Value:', value);
+      console.log('isOtherSelected:', isOtherSelected);
+    } else {
+      setFormInput((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
     }
-    setFormInput((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
   };
 
   const handleSubmit = (e) => {
@@ -71,16 +85,17 @@ function MedicationForm({ obj }) {
         <select
           id="medication-name"
           name="name"
-          value={formInput.name}
+          value={isOtherSelected ? 'Other' : formInput.name}
           onChange={handleChange}
           required
         >
           <option value="" disabled>Select Medication Name</option>
           {medicationTypes.map((type, index) => (
-            // eslint-disable-next-line react/no-array-index-key
+          // eslint-disable-next-line react/no-array-index-key
             <option key={index} value={type}>
               {type}
             </option>
+          // eslint-disable-next-line indent
           ))}
           <option value="Other">Other</option>
         </select>
@@ -103,20 +118,21 @@ function MedicationForm({ obj }) {
         <Form.Select
           aria-label="Pet"
           name="pet_id"
+          isDeleted="false"
           onChange={handleChange}
           className="mb-3"
         >
           <option value="">Select a Pet</option>
-          {
-            pets.map((pet) => (
+          {pets
+            .filter((pet) => !pet.isDeleted)
+            .map((pet) => (
               <option
                 key={pet.firebaseKey}
                 value={pet.firebaseKey}
               >
                 {pet.name}
               </option>
-            ))
-          }
+            ))}
         </Form.Select>
       </FloatingLabel>
 

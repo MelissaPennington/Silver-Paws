@@ -31,9 +31,18 @@ const getMedicationByPetId = (petFirebaseKey) => new Promise((resolve, reject) =
 const viewMedicationDetails = (medicationFirebaseKey) => new Promise((resolve, reject) => {
   Promise.all([getSingleMedication(medicationFirebaseKey), getMedicationbyPet(medicationFirebaseKey)])
     .then(([medicationObject, petMedicationArray]) => {
+      console.log('Medication API Response:', medicationObject);
+      console.log('Pet Medication API Response:', petMedicationArray);
       resolve({ ...medicationObject, pets: petMedicationArray });
     }).catch((error) => reject(error));
 });
+
+// const viewMedicationDetails = (medicationFirebaseKey) => new Promise((resolve, reject) => {
+//   Promise.all([getSingleMedication(medicationFirebaseKey), getMedicationbyPet(medicationFirebaseKey)])
+//     .then(([medicationObject, petMedicationArray]) => {
+//       resolve({ ...medicationObject, pets: petMedicationArray });
+//     }).catch((error) => reject(error));
+// });
 
 const deletePetMedication = (medicationId) => new Promise((resolve, reject) => {
   getMedicationbyPet(medicationId).then((medicationArray) => {
