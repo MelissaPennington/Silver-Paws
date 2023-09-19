@@ -37,13 +37,6 @@ const viewMedicationDetails = (medicationFirebaseKey) => new Promise((resolve, r
     }).catch((error) => reject(error));
 });
 
-// const viewMedicationDetails = (medicationFirebaseKey) => new Promise((resolve, reject) => {
-//   Promise.all([getSingleMedication(medicationFirebaseKey), getMedicationbyPet(medicationFirebaseKey)])
-//     .then(([medicationObject, petMedicationArray]) => {
-//       resolve({ ...medicationObject, pets: petMedicationArray });
-//     }).catch((error) => reject(error));
-// });
-
 const deletePetMedication = (medicationId) => new Promise((resolve, reject) => {
   getMedicationbyPet(medicationId).then((medicationArray) => {
     console.warn(medicationArray, 'Pet Medication');
