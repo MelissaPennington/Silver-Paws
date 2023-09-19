@@ -10,7 +10,7 @@
 
 /* Set a background color and font family for the whole document */
 html, body {
-  background-color: #f5f5f5; /* Light gray background color */
+  background-color: lightgray; /* Light gray background color */
   font-family: Arial, sans-serif; /* Specify a generic sans-serif font */
 }
 
@@ -33,14 +33,14 @@ a:hover {
 
 /* Style buttons */
 .btn-primary {
-  background-color: #007bff; /* Blue background color for primary buttons */
-  border-color: #007bff; /* Blue border color for primary buttons */
-  color: #fff; /* White text color for primary buttons */
+  background-color: darkgray; /* Blue background color for primary buttons */
+  border-color: darkgray; /* Blue border color for primary buttons */
+  color: black; /* White text color for primary buttons */
 }
 
 .btn-primary:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-  border-color: #0056b3;
+  background-color: black; /* Darker blue on hover */
+  border-color: black;
 }
 
 /* Style the header/navbar */
@@ -58,7 +58,7 @@ a:hover {
 
 /* Style the main content section */
 .main-content {
-  background-color: #fff; /* White background color for the main content */
+  background-color: off whitesmoke;
   padding: 20px;
   border-radius: 5px; /* Add some border radius to soften edges */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */

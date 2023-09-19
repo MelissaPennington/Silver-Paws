@@ -65,7 +65,7 @@ function PetForm({ obj }) {
       </FloatingLabel>
 
       {/* IMAGE INPUT  */}
-      <FloatingLabel controlId="floatingInput2" label="Pet's Image" className="mb-4">
+      <FloatingLabel controlId="floatingInput2" label="Pet's Image" className="mb-3">
         <Form.Control
           type="url"
           placeholder="Enter an image url"
@@ -77,7 +77,7 @@ function PetForm({ obj }) {
       </FloatingLabel>
 
       {/* PRICE INPUT  */}
-      <FloatingLabel controlId="floatingInput3" label="Pet's Age" className="mb-5">
+      <FloatingLabel controlId="floatingInput3" label="Pet's Age" className="mb-3">
         <Form.Control
           type="text"
           placeholder="Enter age"
@@ -88,7 +88,7 @@ function PetForm({ obj }) {
         />
       </FloatingLabel>
       {/* ACTION INPUT  */}
-      <FloatingLabel controlId="floatingInput1" label="Breed" className="mb-6">
+      <FloatingLabel controlId="floatingInput4" label="Breed" className="mb-3">
         <Form.Control
           type="text"
           placeholder="Breed"
@@ -100,7 +100,7 @@ function PetForm({ obj }) {
       </FloatingLabel>
 
       {/* ACTION INPUT  */}
-      <FloatingLabel controlId="floatingInput1" label="Action" className="mb-6">
+      <FloatingLabel controlId="floatingInput5" label="Action" className="mb-5">
         <Form.Control
           type="text"
           placeholder="Action"
@@ -112,6 +112,7 @@ function PetForm({ obj }) {
       </FloatingLabel>
 
       <Button type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Pet</Button>
+
     </Form>
   );
 }

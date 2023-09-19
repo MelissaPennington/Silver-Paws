@@ -20,12 +20,7 @@ function MedicationCard({ medicationObj, onUpdate }) {
           setMedications([]);
         });
     }
-  });
-
-  useEffect(() => {
-    getMedicationsForPet();
-    console.warn(medicationObj); // Move the console.log here if you want to log medicationObj after fetching data.
-  }, []);
+  }, [medicationObj.pet_id]);
 
   useEffect(() => {
     getMedicationsForPet();
@@ -37,10 +32,8 @@ function MedicationCard({ medicationObj, onUpdate }) {
     }
   };
 
-  console.warn(medicationObj);
-
   return (
-    <Card style={{ width: '18rem', margin: '10px' }}>
+    <Card style={{ width: '16rem', margin: '10px' }}>
       <Card.Body>
         <Card.Title>{medicationObj.name}</Card.Title>
         {/* Display medications for the pet */}
@@ -54,15 +47,17 @@ function MedicationCard({ medicationObj, onUpdate }) {
             </ul>
           </div>
         )}
-        <Link href={`/medication/${medicationObj.firebaseKey}`} passHref>
-          <Button variant="light" className="m-2">VIEW</Button>
-        </Link>
-        <Link href={`/medication/edit/${medicationObj.firebaseKey}`} passHref>
-          <Button variant="secondary">EDIT MEDICATION</Button>
-        </Link>
-        <Button variant="danger" onClick={deleteThisMedication} className="m-2">
-          DELETE MEDICATION
-        </Button>
+        <div className="d-flex justify-content-between align-items-center">
+          <Link href={`/medication/${medicationObj.firebaseKey}`} passHref>
+            <Button variant="light" size="sm">VIEW</Button>
+          </Link>
+          <Link href={`/medication/edit/${medicationObj.firebaseKey}`} passHref>
+            <Button variant="secondary" size="sm">EDIT</Button>
+          </Link>
+          <Button variant="danger" size="sm" onClick={deleteThisMedication}>
+            DELETE
+          </Button>
+        </div>
       </Card.Body>
     </Card>
   );
