@@ -81,24 +81,23 @@ function MedicationForm({ obj }) {
     <Form onSubmit={handleSubmit}>
       <h2 className="text-white mt-5">{obj.firebaseKey ? 'Update' : 'Create'} Medication</h2>
 
-      <FloatingLabel controlId="floatingInput1" label="" className="mb-3">
-        <select
-          id="medication-name"
+      <FloatingLabel controlId="floatingSelect" label="Medication" className="mb-3">
+        <Form.Select
+          aria-label="Medication"
           name="name"
           value={isOtherSelected ? 'Other' : formInput.name}
           onChange={handleChange}
           required
         >
-          <option value="" disabled>Select Medication Name</option>
+          <option value="" disabled>Select a Medication</option>
           {medicationTypes.map((type, index) => (
-          // eslint-disable-next-line react/no-array-index-key
+            // eslint-disable-next-line react/no-array-index-key
             <option key={index} value={type}>
               {type}
             </option>
-          // eslint-disable-next-line indent
           ))}
           <option value="Other">Other</option>
-        </select>
+        </Form.Select>
       </FloatingLabel>
 
       {isOtherSelected && (
@@ -137,7 +136,17 @@ function MedicationForm({ obj }) {
       </FloatingLabel>
 
       <FloatingLabel controlId="floatingInput2" label="Type" className="mb-3">
-        <Form.Control type="text" placeholder="Type" name="type" value={formInput.type} onChange={handleChange} required />
+        <Form.Select
+          aria-label="Type"
+          name="type"
+          onChange={handleChange}
+        >
+          <option value="">Select a Type</option>
+          <option value="pill">Pill</option>
+          <option value="topical">Topical</option>
+          <option value="chewable">Chewable</option>
+          <option value="injectable">Injectable</option>
+        </Form.Select>
       </FloatingLabel>
 
       <FloatingLabel controlId="floatingInput3" label="Quantity" className="mb-3">
