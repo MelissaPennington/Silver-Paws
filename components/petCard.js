@@ -55,7 +55,7 @@ export default function PetCard({ petObj, onUpdate }) {
   return (
     <>
       {!isDeleted && ( // Conditionally render if the pet is not deleted
-        <Card style={{ width: '19rem', margin: '8px' }}>
+        <Card style={{ width: '18rem', margin: '8px' }}>
           {petObj.image && (
             <>
               <Card.Img
