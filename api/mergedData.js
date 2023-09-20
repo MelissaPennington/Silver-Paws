@@ -33,7 +33,7 @@ const viewMedicationDetails = (medicationFirebaseKey) => new Promise((resolve, r
     .then(([medicationObject, petMedicationArray]) => {
       console.log('Medication API Response:', medicationObject);
       console.log('Pet Medication API Response:', petMedicationArray);
-      resolve({ ...medicationObject, pets: petMedicationArray });
+      resolve({ ...medicationObject, pet: petMedicationArray });
     }).catch((error) => reject(error));
 });
 

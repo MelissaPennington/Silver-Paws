@@ -31,6 +31,10 @@ a:hover {
   padding: 20px;
 }
 
+.img {
+  justify-content: center;
+}
+
 /* Style buttons */
 .btn-primary {
   background-color: darkgray; /* Blue background color for primary buttons */

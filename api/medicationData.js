@@ -94,6 +94,18 @@ const getMedicationbyPet = (pet_id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getMedicationByPetId = (medicationFirebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/medication.json?orderBy="firebaseKey"&equalTo="${medicationFirebaseKey}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(Object.values(data)))
+    .catch(reject);
+});
+
 export {
   getMedications,
   createMedication,
@@ -101,4 +113,5 @@ export {
   getSingleMedication,
   updateMedication,
   getMedicationbyPet,
+  getMedicationByPetId,
 };

@@ -17,8 +17,8 @@ export default function MedicationDetails() {
         .then((data) => {
           setMedicationData(data);
           // Assuming you have an API function to fetch medications by pet ID
-          if (Array.isArray(data.pets) && data.pets.length > 0) {
-            const petIds = data.pets.map((pet) => pet.firebaseKey);
+          if (Array.isArray(data.pet) && data.pet.length > 0) {
+            const petIds = data.pet.map((pet) => pet.firebaseKey);
             getMedicationByPetId(petIds)
               // eslint-disable-next-line no-shadow
               .then((medications) => {
