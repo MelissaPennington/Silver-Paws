@@ -12,9 +12,9 @@ function RememberPets({ pet }) {
           <div
             style={{
               position: 'absolute',
-              top: -160,
+              top: -157,
               left: 0,
-              width: '90%',
+              width: '95%',
               height: '100%',
               background: 'rgba(0, 0, 0, 0)', // Adjust the overlay color and opacity
               display: 'flex',
@@ -29,7 +29,7 @@ function RememberPets({ pet }) {
             <img
               src="https://user-images.githubusercontent.com/124536589/265879524-c8c78dce-f841-4a55-9c47-7e4d2dc067ef.png"
               alt="Overlay Image"
-              style={{ maxWidth: '80%', maxHeight: '80%' }}
+              style={{ maxWidth: '80%', maxHeight: '60%', objectFit: 'cover' }}
             />
           </div>
 

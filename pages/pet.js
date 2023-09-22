@@ -18,7 +18,7 @@ function Pets() {
   }, [getAllThePets]);
   // this is a comment
   return (
-    <div className="text-center my-4">
+    <div className="text-left my-4">
       <Link passHref href="/pet/new">
         <Button>Add A Pet</Button>
       </Link>
